@@ -1,5 +1,7 @@
 <?php 
     // define("BASE_PATH",$_SERVER['DOCUMENT_ROOT'].'/foodzilla/'); 
+    /*$ex = explode('/',  $_SERVER['PHP_SELF']);
+    define('BASE_PATH', $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/'.$ex[1]);*/
     define("BASE_PATH",'http://localhost/foodzilla/');
 ?>
 <html>
