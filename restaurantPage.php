@@ -2,9 +2,9 @@
 require_once 'media/header/header.php';
 if(isset($_GET['resto'])){
 $restoId = base64_decode($_GET['resto']);
-$restoId = 0;
 $str = file_get_contents('controller/restoData.json');
 $restoJson = json_decode($str, true);
+    if (array_key_exists($restoId,$restoJson)){
 ?>
 <div class="page-padding">
 <h2><img src="<?php echo $restoJson[$restoId]['icon'];?>" width="30" height="30" alt=""><?php echo $restoJson[$restoId]['name'];?> <span class="badge badge-secondary">Rating : <?php echo $restoJson[$restoId]['rating'];?></span></h2>
@@ -40,5 +40,6 @@ $restoJson = json_decode($str, true);
 ?>
 <div>
 <?php
+}
 }
 ?>
