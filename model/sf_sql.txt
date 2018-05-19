@@ -1,0 +1,28 @@
+Step 1 : get all Data from line_item_order_history table for order_number_c
+
+	SELECT * FROM `line_item_order_history` WHERE `line_item_placement` in (SELECT id from line_item_order where `order_number_c` =  'dgjhsgbadsk')
+	
+Step 2 : get all data between two date
+
+	SELECT * FROM `line_item_order_history` WHERE  (`modify_date` 
+	between '2017-01-03' and '2018-05-31') and (`line_item_placement` in (SELECT id from line_item_order where `order_number_c` =  'dgjhsgbadsk'))
+	
+Step 3: get all data with sum of impression and click for group by modify_date
+
+	SELECT *,SUM(server_c) as Impressions, SUM(click_c) as Click FROM `line_item_order_history` WHERE (`modify_date` between '2017-01-03' and '2018-05-31') and (`line_item_placement` in (SELECT id from line_item_order where `order_number_c` = 'dgjhsgbadsk')) group by modify_date
+	
+Step 4: get all data with sum of impression and click for group by modify_date and  line_item_placement
+
+	SELECT *,SUM(server_c) as Impressions, SUM(click_c) as Click FROM `line_item_order_history` WHERE (`modify_date` between '2017-01-03' and '2019-05-31') and (`line_item_placement` in (SELECT id from line_item_order where `order_number_c` = 'dgjhsgbadsk')) group by modify_date,line_item_placement
+	
+Step 5 : get Final sql query to fetch all data with date, sum of impression and click with line_item_name
+
+	SELECT line_item_order_history.id, line_item_order.id as line_item_order_ID, line_item_order.line_item_name, line_item_order_history.modify_date,
+	SUM(line_item_order_history.server_c) as Impressions, 
+	SUM(line_item_order_history.click_c) as Click, 
+	line_item_order_history.ctr 
+	FROM `line_item_order_history` 
+	INNER join `line_item_order` 
+	on  line_item_order.id = line_item_order_history.`line_item_placement`  
+	WHERE (line_item_order_history.`modify_date` between '2017-01-03' and '2019-05-31') and line_item_order.`order_number_c` = 'dgjhsgbadsk'
+	group by line_item_order_history.modify_date, line_item_order_history.line_item_placement
